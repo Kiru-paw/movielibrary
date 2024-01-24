@@ -13,6 +13,7 @@ import javax.sql.rowset.serial.SerialBlob;
 
 import dto.Admin;
 import dto.Movie;
+import dto.User;
 
 public class Dao {
 	
@@ -139,4 +140,39 @@ public class Dao {
 		
 		return pst.executeUpdate();
 	}
+	
+	public int saveUser(User user) throws ClassNotFoundException, SQLException {
+		 Connection conn = getConnection();
+		 PreparedStatement pst = conn.prepareStatement("insert into user values(?,?,?,?,?)");
+		 pst.setInt(1, user.getUserid());
+		 pst.setString(2, user.getUsername());
+		 pst.setLong(3, user.getUsercontact());
+		 pst.setString(4, user.getUsermail());
+		 pst.setString(5, user.getUserpassword());
+		 
+		 return pst.executeUpdate();
+	 }
+	
+	public User findUserByEmail(String email) throws ClassNotFoundException, SQLException {
+		 Connection conn = getConnection();
+		 PreparedStatement pst = conn.prepareStatement("Select * from user where usermail = ?");
+		 pst.setString(1, email);
+		 ResultSet rs = pst.executeQuery();
+		 
+		
+			 User user= new User();
+			 
+			 if(rs.next()) {
+			 user.setUserid(rs.getInt(1));
+			 user.setUsername(rs.getString(2));
+			 user.setUsercontact(rs.getLong(3));
+			 user.setUsermail(rs.getString(4));
+			 user.setUserpassword(rs.getString(5));
+			 return user;
+		 }
+		 else {
+			 return null;
+		 }
+		 
+	 }
 }

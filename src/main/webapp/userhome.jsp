@@ -21,8 +21,7 @@
 <th>Movie Genre</th>
 <th>Movie Language</th>
 <th>Movie Image</th>
-<th>Delete</th>
-<th>Edit</th>
+<th>Buy</th>
 </tr>
 
 <% for(Movie m : movies){ %>
@@ -37,15 +36,13 @@
 	
 	<% String base64image= new String(Base64.getEncoder().encode(m.getMovieimage())); %>
 	<td><img  src="data:image/jpeg;base64, <%=base64image %>" height="100px" width="100px" > </td>
-	<td><a href="deletemovie?id=<%=m.getMovieid()%>">delete</a> </td>
-	<td><a href="editmovie?id=<%=m.getMovieid()%>">edit</a> </td>
-	
+	<td><a href="buymovie?id=<%=m.getMovieid()%>">Buy</a> </td>
 	</tr>
 	
 	<% } %>
 </table>
 
-<a href="addmovie.jsp">Addmovie</a>
+<a href="addmovie.jsp">View_All_Movies</a>
 <a href = "logout">LogOut</a>
 </body>
 </html>

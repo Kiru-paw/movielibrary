@@ -8,6 +8,7 @@
 </head>
 <body>
 <h2>Add Movie</h2>
+<%if(request.getSession(false)!=null){ %>
 <form action = "addmovie" method="post" enctype="multipart/form-data">
 <table>
 <tr>
@@ -45,6 +46,15 @@
 
 </form>
 
+<% }
+else { %>
+
+<%
+request.setAttribute("message", "Access Denied, Admin login required");
+RequestDispatcher d = request.getRequestDispatcher("adminlogin.jsp");
+d.include(request, response);
+%>
+<% }%>
 
 </body>
 </html>
