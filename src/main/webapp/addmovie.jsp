@@ -5,44 +5,99 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style type="text/css">
+body {
+    font-family: sans-serif;
+    background-image: url('./home1.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 300px;
+    margin: 50px auto;
+    background-color: grey;
+    padding: 100px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 26px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input:hover{
+background-color: lightgrey;
+}
+textarea:hover{
+background-color: lightgrey;
+}
+button {
+    background-color: blue;
+    color: white;
+    padding: 5px;
+    border: medium;
+    border-radius: 2px;
+    cursor: pointer;
+    width: 100px;
+    
+}
+
+button:hover {
+    background-color: cadetblue;
+    color:black;
+}
+</style>
 </head>
 <body>
-<h2>Add Movie</h2>
+<div class="container">
 <%if(request.getSession(false)!=null){ %>
 <form action = "addmovie" method="post" enctype="multipart/form-data">
-<table>
-<tr>
-<td><label for = "movie-id"><b>Movie Id</b></label></td>
-<td><input type = "number" name="movieid" id="movie-id"></td>
-</tr>
-<tr>
-<td><label for = "movie-name"><b>Movie Name</b></label></td>
-<td><input type = "text" name="moviename" id="movie-name"></td>
-</tr>
-<tr>
-<td><label for = "movie-price"><b>Movie Price</b></label></td>
-<td><input type = "number" name="movieprice" id = "movie-price"></td>
-</tr>
-<tr>
-<td><label for = "movie-rating"><b>Movie Rating</b></label></td>
-<td><input type = "number" name="movierating" id="movie-rating"></td>
-</tr>
-<tr>
-<td><label for = "movie-genre"><b>Movie Genre</b></label></td>
-<td><input type = "text" name="moviegenre" id="movie-genre"></td>
-</tr>
-<tr>
-<td><label for = "movie-language"><b>Movie Language</b></label></td>
-<td><input type = "text" name="movielanguage" id="movie-language"></td>
-</tr>
-<tr>
-<td><label for = "movie-image"><b>Movie Genre</b></label></td>
-<td><input type = "file" name="movieimage" id="movie-image"></td>
-</tr>
+<center><header><h2><b><u>Add Movie</u></b></h2></header></center>
 
-</table>
-<input type="submit">
-<input type ="reset">
+<label for = "movie-id"><b>Movie Id</b></label>
+<input type = "number" name="movieid" id="movie-id">
+
+<label for = "movie-name"><b>Movie Name</b></label>
+<input type = "text" name="moviename" id="movie-name">
+
+<label for = "movie-price"><b>Movie Price</b></label>
+<input type = "number" name="movieprice" id = "movie-price">
+
+<label for = "movie-rating"><b>Movie Rating</b></label>
+<input type = "number" name="movierating" id="movie-rating">
+
+<label for = "movie-genre"><b>Movie Genre</b></label>
+<input type = "text" name="moviegenre" id="movie-genre">
+
+<label for = "movie-language"><b>Movie Language</b></label>
+<input type = "text" name="movielanguage" id="movie-language">
+
+<label for = "movie-image"><b>Movie Genre</b></label>
+<input type = "file" name="movieimage" id="movie-image">
+
+<label for = "movie-description"><b>Movie Description</b></label>
+<input type ="text" id="movie-description" name="moviedescription" style="height:150px">
+
+
+
+<br><center><b> <button type="submit">Submit</button></b></center> <br>
+<center><b><button type ="reset">Reset</button></b></center>
 
 </form>
 
@@ -55,6 +110,6 @@ RequestDispatcher d = request.getRequestDispatcher("adminlogin.jsp");
 d.include(request, response);
 %>
 <% }%>
-
+</div>
 </body>
 </html>

@@ -9,6 +9,13 @@ public class Movie {
 	 private String moviegenre;
 	 private String movielanguage;
 	 private byte[] movieimage;
+	 private String moviedescription;
+	public String getMoviedescription() {
+		return moviedescription;
+	}
+	public void setMoviedescription(String moviedescription) {
+		this.moviedescription = moviedescription;
+	}
 	public int getMovieid() {
 		return movieid;
 	}

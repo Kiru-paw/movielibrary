@@ -8,9 +8,39 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style type="text/css">
+table{
+background-color: cadetblue;
+}
+body{
+font-family: sans-serif;
+background-color: whitesmoke;
+}
+button {
+    background-color: grey;
+    padding: 5px;
+    border: medium;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: cadetblue;
+    color:black;
+    box-shadow: 0 0 30px cadetblue; 
+}
+.anchor{
+color: blue;
+}
+td,th{
+text-align: center;
+}
+
+</style>
 </head>
+
 <body>
-<h1>Home Page</h1>
+<center><header><h2><b><u>HOME</u></b></h2></header></center>
 <%List<Movie> movies = (List)request.getAttribute("movies"); %>
 <table border = "5px" class="table">
 <tr>
@@ -23,6 +53,7 @@
 <th>Movie Image</th>
 <th>Delete</th>
 <th>Edit</th>
+<th>Movie Description</th>
 </tr>
 
 <% for(Movie m : movies){ %>
@@ -37,15 +68,17 @@
 	
 	<% String base64image= new String(Base64.getEncoder().encode(m.getMovieimage())); %>
 	<td><img  src="data:image/jpeg;base64, <%=base64image %>" height="100px" width="100px" > </td>
-	<td><a href="deletemovie?id=<%=m.getMovieid()%>">delete</a> </td>
-	<td><a href="editmovie?id=<%=m.getMovieid()%>">edit</a> </td>
+	<td><a href="deletemovie?id=<%=m.getMovieid()%>" class="anchor">Delete</a> </td>
+	<td><a href="editmovie?id=<%=m.getMovieid()%>" class="anchor">Edit</a> </td>
+	<td><%=m.getMoviedescription() %></td>
 	
 	</tr>
 	
 	<% } %>
 </table>
+<br>
+<center><b><button type="submit"><a href="addmovie.jsp" class="anchor">Addmovie</a></button>
+<button type="submit"><a href="logout" class="anchor">Logout</a></button></b></center>
 
-<a href="addmovie.jsp">Addmovie</a>
-<a href = "logout">LogOut</a>
 </body>
 </html>

@@ -22,9 +22,11 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 	Dao dao = new Dao();
 	try {
 		User user = dao.findUserByEmail(email);
+		
 		if(user!=null) {
 			if(user.getUserpassword().equals(password)) {
 				HttpSession session = req.getSession();
+				session.setAttribute("user", dao.findUserByEmail(email));
 				session.setAttribute("username", user.getUsername());
 				req.setAttribute("movies", dao.getAllMovies());
 				RequestDispatcher d = req.getRequestDispatcher("userhome.jsp");

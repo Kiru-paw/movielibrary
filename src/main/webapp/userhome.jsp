@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>Home Page</h1>
-<%List<Movie> movies = (List)request.getAttribute("movies"); %>
+<%List<Movie> movies = (List) request.getAttribute("movies"); %>
 <table border = "5px" class="table">
 <tr>
 <th>Movie ID</th>
@@ -42,7 +42,7 @@
 	<% } %>
 </table>
 
-<a href="addmovie.jsp">View_All_Movies</a>
+<a href="watchmovies">View_All_Movies</a>
 <a href = "logout">LogOut</a>
 </body>
 </html>

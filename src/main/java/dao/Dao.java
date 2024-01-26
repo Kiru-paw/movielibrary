@@ -59,7 +59,7 @@ public class Dao {
  
  public int saveMovie(Movie movie) throws ClassNotFoundException, SQLException {
 	 Connection conn = getConnection();
-	 PreparedStatement pst = conn.prepareStatement("insert into movie values(?,?,?,?,?,?,?)");
+	 PreparedStatement pst = conn.prepareStatement("insert into movie values(?,?,?,?,?,?,?,?)");
 	 pst.setInt(1, movie.getMovieid());
 	 pst.setString(2, movie.getMoviename());
 	 pst.setDouble(3, movie.getMovieprice());
@@ -68,6 +68,7 @@ public class Dao {
 	 pst.setString(6, movie.getMovielanguage());
 	 Blob imageblob = new SerialBlob(movie.getMovieimage());
 	 pst.setBlob(7, imageblob);
+	 pst.setString(8, movie.getMoviedescription());
 	 return pst.executeUpdate();
 			 
  }
@@ -88,6 +89,7 @@ public class Dao {
 		 Blob b = rs.getBlob(7);
 		 byte[] img = b.getBytes(1, (int)b.length());
 		 m.setMovieimage(img);
+		 m.setMoviedescription(rs.getString(8));
 		 moviesList.add(m);
 	 }
 	 
@@ -119,14 +121,15 @@ public class Dao {
 		Blob b = rs.getBlob(7);
 		byte[] img = b.getBytes(1, (int)b.length());
 		m.setMovieimage(img);
+		m.setMoviedescription(rs.getString(8));
 		return m;
 	}
 	
 	public int updateMovie(Movie movie) throws ClassNotFoundException, SQLException {
 		Connection conn = getConnection();
-		PreparedStatement pst = conn.prepareStatement("update movie set moviename=?, movieprice=?,movierating=?,moviegenre=?,movielanguage=?,movieimage=? where movieid=?");
+		PreparedStatement pst = conn.prepareStatement("update movie set moviename=?, movieprice=?,movierating=?,moviegenre=?,movielanguage=?,movieimage=?,moviedescription=? where movieid=?");
 		
-		pst.setInt(7, movie.getMovieid());
+		pst.setInt(8, movie.getMovieid());
 		
 		pst.setString(1, movie.getMoviename());
 		pst.setDouble(2, movie.getMovieprice());
@@ -136,7 +139,7 @@ public class Dao {
 		System.out.println(movie.getMovieimage());
 		Blob imageBlob = new SerialBlob(movie.getMovieimage());
 	    pst.setBlob(6, imageBlob);
-		
+		pst.setString(7, movie.getMoviedescription());
 		
 		return pst.executeUpdate();
 	}
@@ -175,4 +178,55 @@ public class Dao {
 		 }
 		 
 	 }
+	
+	public int buyMovie(Movie movie, User user) throws SQLException, ClassNotFoundException {
+		Connection conn=getConnection();
+		PreparedStatement pst=conn.prepareStatement("insert into buymovie values(?,?)");
+		pst.setInt(1, movie.getMovieid());
+		pst.setInt(2, user.getUserid());
+		int result= pst.executeUpdate();
+		System.out.println(result);
+		return result;
+		
+	}
+	
+	public List<Movie> getUserMovies(int id) throws SQLException, ClassNotFoundException {
+		Connection conn=getConnection();
+		PreparedStatement pst=conn.prepareStatement("select * from movie inner join buymovie where buymovie.userid=? and movie.movieid=buymovie.movieid ");
+		pst.setInt(1, id);
+		ResultSet rs=pst.executeQuery();
+		
+        List<Movie>  movies=new ArrayList<Movie>();
+		
+		while(rs.next()) {
+			Movie movie=new Movie();
+			movie.setMovieid(rs.getInt(1));
+			movie.setMoviename(rs.getString(2));
+			movie.setMovieprice(rs.getDouble(3));
+			movie.setMovierating(rs.getDouble(4));
+			movie.setMoviegenre(rs.getString(5));
+			movie.setMovielanguage(rs.getString(6));
+			
+			Blob b=rs.getBlob(7);
+			byte[] img=b.getBytes(1, (int)b.length());
+			movie.setMovieimage(img);
+			movie.setMoviedescription(rs.getString(8));
+			movies.add(movie);
+			
+		}
+		return movies;
+		
+	}
+	public boolean checkMovie(int movieid, int userid) throws ClassNotFoundException, SQLException {
+		Connection conn = getConnection();
+		PreparedStatement pst = conn.prepareStatement("select * from buymovie where movieid = ? and userid =? ");
+		pst.setInt(1, movieid);
+		pst.setInt(2, userid);
+		if(pst.executeQuery().next()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 }

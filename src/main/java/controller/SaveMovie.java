@@ -29,6 +29,7 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 	String movielanguage = req.getParameter("movielanguage");
 	
 	Part imagepart = req.getPart("movieimage");
+	String moviedescription = req.getParameter("moviedescription");
 	
 	Movie movie = new Movie();
 	movie.setMovieid(movieid);
@@ -38,6 +39,7 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 	movie.setMoviegenre(moviegenre);
 	movie.setMovielanguage(movielanguage);
 	movie.setMovieimage(imagepart.getInputStream().readAllBytes());
+	movie.setMoviedescription(moviedescription);
 	
 	Dao dao = new Dao();
 	try {
